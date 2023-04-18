@@ -27,3 +27,26 @@ Salary: This column represents the annual salary of each employee in US dollars.
 4  52.0    Male        Master's           Director                 20.0  200000.0 
 
 ```
+
+# require
+```
+pip install -r requirement.txt
+```
+
+# Usage
+```
+python main.py
+```
+
+# result
+
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="">
+    <img width="40%" src="docs/fig1.png" alt="logo">
+  </a>
+
+  <h3 align="center">predict</h3>
+
+</p>
