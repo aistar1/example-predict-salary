@@ -14,10 +14,13 @@ def descript(desc):
     print(f'{desc}')
     print('################################')
 
-
+def getLabelDecode(labelEncoder):
+    keys = labelEncoder.classes_
+    values = labelEncoder.transform(labelEncoder.classes_)
+    dictionary = dict(zip(keys, values))
+    return dictionary
 
 def main():
-
     # df = pd.read_csv('/kaggle/input/salaly-prediction-for-beginer/Salary Data.csv')
     df = pd.read_csv('Salary Data.csv')
     df.head()
@@ -28,15 +31,21 @@ def main():
     # https://www.geeksforgeeks.org/dealing-with-rows-and-columns-in-pandas-dataframe/
     df.dropna(axis=0, inplace=True) # Drop rows which contain missing values.
 
-    df["Gender"] = df["Gender"].replace({ "Female":0, "Male":1})
-    # genderLabel = LabelEncoder()
-    # df['Gender'] = genderLabel.fit_transform(df['Gender'])
+    genderLabel = LabelEncoder()
+    df['Gender'] = genderLabel.fit_transform(df['Gender'])
+    #df["Gender"] = df["Gender"].replace({ "Female":0, "Male":1})
 
     educationLabel = LabelEncoder()
     df['Education Level'] = educationLabel.fit_transform(df['Education Level'])
 
-    jog_label = LabelEncoder()
-    df['Job Title'] = jog_label.fit_transform(df['Job Title'])
+    jobLabel = LabelEncoder()
+    df['Job Title'] = jobLabel.fit_transform(df['Job Title'])
+    
+    descript('label decode')
+    print(getLabelDecode(genderLabel), '\n')
+    print(getLabelDecode(educationLabel), '\n')
+    print(getLabelDecode(jobLabel), '\n')
+
 
     df.head()
     descript('after LabelEncoder data')
@@ -68,10 +77,46 @@ def main():
     descript('result')
     print('Accuracy: ' + str(accuracy * 100) + '%')
 
-
-
-    plt.scatter(x_test['Years of Experience'], y_test)
+    
+    fig = plt.figure(figsize=(8,8), dpi=100)
+    plt.title('Years of Experience  VS  Salary')
+    plt.xlabel('Years of Experience', {'fontsize':15,'color':'red'})
+    plt.ylabel('Salary', {'fontsize':15,'color':'green'})
+    plt.scatter(x_test['Years of Experience'], y_test, c='blue', label='grouth')
+    plt.scatter(x_test['Years of Experience'], y_pred, c='red', label='predict')
+    plt.legend(
+        loc='best',
+        fontsize=10,
+        shadow=True,
+        facecolor='#ccc',
+        edgecolor='#000',
+        title='label',
+        title_fontsize=10)
     plt.savefig('docs/test.jpg')
+
+
+    fig, ax = plt.subplots(2,2, figsize=(10, 10))
+    plt.suptitle('test dataset (Salary)')    # main title
+    ax[0][0].set_title('Age')  # sub title
+    ax[1][0].set_title('Gender')  # sub title
+    ax[0][1].set_title('Education Level')  # sub title
+    ax[1][1].set_title('Years of Experience')  # sub title
+
+    ax[0][0].scatter(x_test['Age'], y_test, c='blue', label='grouth')
+    ax[1][0].scatter(x_test['Gender'], y_test, c='blue', label='grouth')
+    ax[0][1].scatter(x_test['Education Level'], y_test, c='blue', label='grouth')
+    ax[1][1].scatter(x_test['Years of Experience'], y_test, c='blue', label='grouth')
+
+    ax[0][1].text(0.95, 0.01, f'{getLabelDecode(educationLabel)}',
+        verticalalignment='bottom', horizontalalignment='right',
+        transform=ax[0][1].transAxes,
+        color='green', fontsize=10)
+    ax[1][0].text(0.95, 0.01, f'{getLabelDecode(genderLabel)}',
+        verticalalignment='bottom', horizontalalignment='right',
+        transform=ax[1][0].transAxes,
+        color='green', fontsize=10)
+    plt.savefig('docs/test2.jpg')
+
 
 
     dataFrameTest = x_test
