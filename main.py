@@ -62,7 +62,8 @@ def main():
     print('x_test: ', x_test.shape)
     print('y_train: ', y_train.shape)
     print('y_test: ', y_test.shape, '\n')
-
+    
+    # https://scikit-learn.org/stable/modules/linear_model.html
     # https://p61402.github.io/2019/06/12/%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E7%B6%93%E5%85%B8%E6%BC%94%E7%AE%97%E6%B3%95%E5%AF%A6%E4%BD%9C-Linear-Regression/
     model = LinearRegression().fit(x_train, y_train)
     y_pred = model.predict(x_test)
