@@ -40,13 +40,6 @@ python main.py
 
 # result
 
-<!-- PROJECT LOGO -->
-<br />
-<p align="center">
-  <a href="">
-    <img width="40%" src="docs/fig1.png" alt="logo">
-  </a>
+<img src="docs/test2.jpg" width = "500" height = "500" alt="img1" align=center />
 
-  <h3 align="center">predict</h3>
-
-</p>
+<img src="docs/test.jpg" width = "500" height = "500" alt="img2" align=center />
